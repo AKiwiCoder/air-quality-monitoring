@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,27 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#include "sensors/particle.h"
+
+#include <Arduino.h>
+#include <Wire.h>
+
+Particle::Particle() :Sensor("Particle"),  hpmaSerial(D6, D7), hpma115S0(hpmaSerial) {}
+
+Particle::~Particle() {}
+
+bool Particle::setup() {
+  hpmaSerial.begin(9600);
+  hpma115S0.Init();
+  hpma115S0.StartParticleMeasurement();
+  return true;
+}
+
+bool Particle::poll() {
+    if (hpma115S0.ReadParticleMeasurement(&pm2_5, &pm10)) {
+      Serial.println("PM 2.5: " + String(pm2_5) + " ug/m3");
+      Serial.println("PM 10: " + String(pm10) + " ug/m3");
+    }
+    return true;
+}

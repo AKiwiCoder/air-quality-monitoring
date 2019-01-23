@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,25 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#ifndef __SENSORS_PRESSURE_H
+#define __SENSORS_PRESSURE_H
+
+#include <Adafruit_MPL3115A2.h>
+
+#include "sensors/sensor.h"
+
+class Pressure : public Sensor {
+ public:
+  Pressure();
+  virtual ~Pressure();
+
+ protected:
+  bool setup();
+  bool poll();
+
+ private:
+  Adafruit_MPL3115A2 baro;
+};
+
+#endif  //__SENSORS_PRESSURE_H

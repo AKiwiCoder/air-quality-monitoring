@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,32 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#include "sensors/pressure.h"
+
+#include <Arduino.h>
+#include <Wire.h>
+
+Pressure::Pressure() : Sensor("Pressure") {
+
+}
+
+Pressure::~Pressure(){}
+
+bool Pressure::setup() {
+ if (!baro.begin()) {
+    Serial.println("Cannot find barometric sensor");
+    return false;
+  }
+
+  return true;
+}
+
+bool Pressure::poll() {
+    float pascals = baro.getPressure();
+  float millibars = pascals * 0.01;  // 1 pascal == 0.01 millibar
+  Serial.print("Pressure: ");
+  Serial.print(millibars);
+  Serial.println(" mb"); 
+  return true;
+}

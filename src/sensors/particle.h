@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#ifndef __SENSORS_PARTICLE_H
+#define __SENSORS_PARTICLE_H
+
+#include <SoftwareSerial.h>
+#include <hpma115S0.h>
+
+#include "sensors/sensor.h"
+
+class Particle : public Sensor {
+ public:
+  Particle();
+  virtual ~Particle();
+
+ protected:
+  bool setup();
+  bool poll();
+
+ private:
+  SoftwareSerial hpmaSerial;
+  HPMA115S0 hpma115S0;
+
+  unsigned int pm2_5;
+  unsigned int pm10;
+};
+
+#endif  //__SENSORS_PARTICLE_H

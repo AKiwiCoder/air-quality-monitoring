@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,45 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#include "sensors/sensor.h"
+
+#include <Arduino.h>
+#include <Wire.h>
+
+Sensor::Sensor(const char *name) : name(name), operational(false) {}
+
+Sensor::~Sensor() {}
+
+void Sensor::setupSensor() {
+  Serial.print("Setup Sensor ");
+  Serial.print(name);
+  Serial.println(": Starting");
+
+  if (setup()) {
+    operational = true;
+  } else {
+    operational = false;
+  }
+
+  Serial.print("Sensor ");
+  Serial.print(name);
+  Serial.println(operational ? ": Operational" : ": Failed");
+
+  Serial.print("Setup Sensor ");
+  Serial.print(name);
+  Serial.println(": Finished");
+}
+
+void Sensor::updateReadings() {
+  if (operational) {
+    Serial.print("Polling Sensor ");
+    Serial.println(name);
+    if (!poll()) {
+      operational = false;
+      Serial.print("Sensor ");
+      Serial.print(name);
+      Serial.println(": Failed");
+    }
+  }
+}

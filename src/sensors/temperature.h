@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,33 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#ifndef __SENSORS_TEMPERATURE_H
+#define __SENSORS_TEMPERATURE_H
+
+#include <Adafruit_HTU21DF.h>
+
+#include "sensors/sensor.h"
+
+class Temperature : public Sensor {
+ public:
+  Temperature();
+  virtual ~Temperature();
+
+  float getTemperature() { return temperature; }
+  float getHumidity() { return humidity; }
+
+  uint32_t getAbsoluteHumidity();
+
+protected:
+  bool setup();
+  bool poll();
+
+ private:
+  Adafruit_HTU21DF htu;
+
+  float temperature;
+  float humidity;
+};
+
+#endif  //__SENSORS_TEMPERATURE_H

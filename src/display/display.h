@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,40 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#ifndef __DISPLAY_H
+#define __DISPLAY_H
+
+#include <U8g2lib.h>
+
+#include "sensors/gas.h"
+#include "sensors/lux.h"
+#include "sensors/particle.h"
+#include "sensors/pressure.h"
+#include "sensors/temperature.h"
+#include "sensors/ultraviolet.h"
+
+class Display {
+ public:
+  Display(Lux &lux, Ultraviolet &uv, Pressure &pressure, Temperature &temperature,
+          Gas &gas, Particle &particle);
+  ~Display();
+
+    void setup();
+
+    void showBootScreen();
+    void showInitialisationScreen();
+    void showInformationScreen();
+    
+ private:
+  Lux &lux;
+  Ultraviolet &uv;
+  Pressure &pressure;
+  Temperature &temperature;
+  Gas &gas;
+  Particle &particle;
+
+  U8G2_ST7920_128X64_F_SW_SPI u8g2;
+};
+
+#endif  //__DISPLAY_H

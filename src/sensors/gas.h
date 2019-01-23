@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,31 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#ifndef __SENSORS_GAS_H
+#define __SENSORS_GAS_H
+
+#include <Adafruit_SGP30.h>
+
+#include "sensors/sensor.h"
+
+class Gas : public Sensor {
+ public:
+  Gas();
+  virtual ~Gas();
+
+  uint16_t getVOCppb() { return tvoc; }
+  uint16_t getECO2ppm() { return eco2; }
+
+ protected:
+  bool setup();
+  bool poll();
+
+ private:
+  Adafruit_SGP30 sgp;
+
+  uint16_t tvoc;
+  uint16_t eco2;
+};
+
+#endif  //__SENSORS_GAS_H

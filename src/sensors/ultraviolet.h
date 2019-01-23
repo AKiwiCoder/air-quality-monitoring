@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,25 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#ifndef __SENSORS_UV_H
+#define __SENSORS_UV_H
+
+#include <Adafruit_VEML6070.h>
+
+#include "sensors/sensor.h"
+
+class Ultraviolet : public Sensor {
+ public:
+  Ultraviolet();
+  virtual ~Ultraviolet();
+
+ protected:
+  bool setup();
+  bool poll();
+
+ private:
+  Adafruit_VEML6070 uv;
+};
+
+#endif  //__SENSORS_UV_H

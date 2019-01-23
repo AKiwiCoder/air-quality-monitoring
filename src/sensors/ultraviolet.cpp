@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,23 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#include "sensors/ultraviolet.h"
+
+#include <Arduino.h>
+#include <Wire.h>
+
+Ultraviolet::Ultraviolet() : Sensor("UV") {}
+
+Ultraviolet::~Ultraviolet() {}
+
+bool Ultraviolet::setup() {
+  uv.begin(VEML6070_4_T);
+  return true;
+}
+
+bool Ultraviolet::poll() {
+  Serial.print("UV light level: ");
+  Serial.println(uv.readUV());
+  return true;
+}

@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,42 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#include "sensors/lux.h"
+
+#include <Arduino.h>
+#include <Wire.h>
+
+Lux::Lux() : Sensor("Lux"), tsl(TSL2561_ADDR_FLOAT) {}
+
+Lux::~Lux() {}
+
+bool Lux::setup() {
+  if (!tsl.begin()) {
+    Serial.print("Cannot find lux center");
+    return false;
+  }
+
+  tsl.enableAutoRange(true);
+  tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_402MS);
+
+  return true;
+}
+
+bool Lux::poll() {
+  sensors_event_t event;
+  tsl.getEvent(&event);
+
+  /* Display the results (light is measured in lux) */
+  if (event.light) {
+    Serial.print("Light: ");
+    Serial.print(event.light);
+    Serial.println(" lux");
+  } else {
+    /* If event.light = 0 lux the sensor is probably saturated
+       and no reliable data could be generated! */
+    Serial.println("Sensor overload");
+  }
+
+  return true;
+}

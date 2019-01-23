@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2018 Andrew Norman
@@ -19,3 +20,26 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#ifndef __SENSORS_LUX_H
+#define __SENSORS_LUX_H
+
+#include <Adafruit_Sensor.h>
+#include <Adafruit_TSL2561_U.h>
+
+#include "sensors/sensor.h"
+
+class Lux : public Sensor {
+ public:
+  Lux();
+  virtual ~Lux();
+
+protected:
+  bool setup();
+  bool poll();
+
+ private:
+  Adafruit_TSL2561_Unified tsl;
+};
+
+#endif  //__SENSORS_LUX_H
